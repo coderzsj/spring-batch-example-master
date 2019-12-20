@@ -1,0 +1,18 @@
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.zsj.spb.db2file.entity
+  configuration:
+    map-underscore-to-camel-case: true
+spring:
+  datasource:
+    url: jdbc:postgresql://39.107.92.203:5432/test_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  batch:
+    job:
+      enabled: true #默认启动后不自动执行job
+#showSql
+#logging:
+#  level:
+#    com.zsj.spb.db2file.mapper: debug

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--划分sql，各管各自的-->
+<mapper namespace="com.zsj.spb.db2file.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.zsj.spb.db2file.entity.User">
+        <id column="id" property="id"/>
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="realname" column="realname"/>
+    </resultMap>
+
+    <!--获取用户信息列表-->
+    <select id="getUserList" resultType="com.zsj.spb.db2file.entity.User">
+        select * from tb_user where 1=1
+        <if test="id != null and id != ''">
+            and id=#{id}
+        </if>
+        <if test="username != null and username != ''">
+            and username=#{username}
+        </if>
+        <if test="realname != null and realname != ''">
+            and realname=#{realname}
+        </if>
+    </select>
+
+    <!--批量插入数据-->
+    <insert id="saveUserBatch" parameterType="java.util.Map">
+        insert into tb_user(id,username,password,realname) values
+        <foreach collection="list" item="item" separator="," >
+            (#{item.id},#{item.username},#{item.password},#{item.realname})
+        </foreach>
+    </insert>
+
+    <insert id="saveUser" parameterType="java.util.Map" useGeneratedKeys="true">
+        insert into tb_user(id,username,password,realname) values (#{id},#{username},#{password},#{realname})
+    </insert>
+
+</mapper>
+
