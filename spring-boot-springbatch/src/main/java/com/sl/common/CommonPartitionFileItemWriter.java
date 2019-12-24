@@ -1,4 +1,4 @@
-package com.zsj.spb.db2file.common;
+package com.sl.common;
 
 import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor;
@@ -10,20 +10,23 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommonFileItemWriter<T> extends FlatFileItemWriter<T> {
-    private FileSystemResource fileSystemResource;
+/**
+ * 公共写
+ * @author shuliangzhao
+ * @Title: CommonFileItemWriter
+ * @ProjectName spring-boot-learn
+ * @Description: TODO
+ * @date 2019/9/15 20:48
+ */
+public class CommonPartitionFileItemWriter<T> extends FlatFileItemWriter<T> {
 
-    public CommonFileItemWriter(Class clz) {
-        init(clz);
-        fileSystemResource = new FileSystemResource("D:\\"+ clz.getSimpleName() + ".csv");
-        setResource(fileSystemResource); /*被写入的文件地址*/
-    }
+    private FileSystemResource fileSystemResource;
 
     public void init(Class clz) {
         BeanWrapperFieldExtractor beanWrapperFieldExtractor = new BeanWrapperFieldExtractor();
-        Field[]      fields = clz.getDeclaredFields();
-        List<String> list   = new ArrayList<>();
-        for (java.lang.reflect.Field field : fields) {
+        Field[] fields = clz.getDeclaredFields();
+        List<String> list = new ArrayList<>();
+        for (Field field : fields) {
             if (!Modifier.isStatic(field.getModifiers())) {
                 list.add(field.getName());
             }
@@ -31,17 +34,18 @@ public class CommonFileItemWriter<T> extends FlatFileItemWriter<T> {
         String[] names = new String[list.size()];
         beanWrapperFieldExtractor.setNames(list.toArray(names));
         beanWrapperFieldExtractor.afterPropertiesSet();
-
         DelimitedLineAggregator lineAggregator = new DelimitedLineAggregator();
         lineAggregator.setDelimiter(",");
         lineAggregator.setFieldExtractor(beanWrapperFieldExtractor);
-
+        setLineAggregator(lineAggregator);
         setName(clz.getSimpleName());
         setEncoding(CommonConstants.ENCODING_READ);
-
     }
 
+    public CommonPartitionFileItemWriter(Class clz,String fromId,String toId) {
+        init(clz);
+        fileSystemResource = new FileSystemResource("D:\\aplus\\shuqian\\source\\"+ clz.getSimpleName()+"-"+fromId + "-" + toId  + ".csv");
+        setResource(fileSystemResource);
 
-
-
+    }
 }

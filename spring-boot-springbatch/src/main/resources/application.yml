@@ -1,0 +1,9 @@
+mybatis:
+    mapperLocations: classpath:mapper/*.xml
+    type-aliases-package: com.sl.entity
+spring:
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        password: root
+        url: jdbc:mysql://jdbc:postgresql://39.107.92.203:5432/test_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+        username: root

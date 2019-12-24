@@ -23,6 +23,11 @@ public class RequestIdTraceInterceptor implements HandlerInterceptor  {
 
     private static final Logger logger = LoggerFactory.getLogger(RequestIdTraceInterceptor.class);
 
+    /**
+     * 获取请求id
+     * @param request
+     * @return String
+     */
     public static String getRequestId(HttpServletRequest request) {
         String requestId;
         String parameterRequestId = request.getParameter(REQUEST_ID_KEY);

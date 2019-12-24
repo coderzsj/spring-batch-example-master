@@ -3,6 +3,7 @@ package me.mason.springbatch.example.file2db.config;
 import me.mason.springbatch.entity.User;
 import me.mason.springbatch.example.file2db.listener.File2DbJobEndListener;
 import me.mason.springbatch.example.file2db.mapper.UserFieldSetMapper;
+import me.mason.springbatch.example.file2db.reader.CommonMybatisItemReader;
 import me.mason.springbatch.example.file2db.step.File2DbItemProcessor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecutionListener;
@@ -65,7 +66,7 @@ public class File2DbBatchConfig {
         return new FlatFileItemReaderBuilder<User>()
                 .name(funcName)
                 .resource(new ClassPathResource("user-data.csv"))
-//                .linesToSkip(1)
+//                .linesToSkip(1) /*读取文件开始时要跳过的行数。*/
                 .delimited()
                 .names(new String[]{"id","name","phone","title","email","gender","date_of_birth","sys_create_time","sys_create_user","sys_update_time","sys_update_user"})
                 .fieldSetMapper(new UserFieldSetMapper())

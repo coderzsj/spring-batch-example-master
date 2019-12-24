@@ -45,7 +45,7 @@ public class JobLauncherService {
      */
     public Map<String,Object>  startJob(Job job,JobParameters jobParameters) throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
         Map<String,Object> resultMap = CollUtil.newHashMap();
-        //计时
+        /* 计时 */
         StopWatch stopWatch = new StopWatch();
         stopWatch.start(job.getName());
         //执行任务
